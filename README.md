@@ -1,13 +1,38 @@
 # Agentic AI Use Case for a Banking Client
 
 ## Overview
-This repository provides a starter blueprint for designing an **Agentic AI solution for a banking client**. The goal is to help banks move from traditional chatbot workflows to an intelligent, goal-oriented system that can reason over customer intent, retrieve relevant data, orchestrate internal tools, and support both customer-facing and employee-facing banking operations.
+This repository provides a starter blueprint for designing an **Agentic AI solution for a banking client** using a **notebook-first workflow**. We will explore the use case, shape assumptions, and validate solution components in Jupyter notebooks first. Once the logic is stable, the final implementation that is intended for deployment will be maintained as Python modules under `src/`.
 
-Agentic AI goes beyond scripted conversations by combining:
-- **Planning** to break a request into tasks.
-- **Tool usage** to interact with banking systems and knowledge bases.
-- **Memory and context management** to maintain continuity across interactions.
-- **Guardrails and governance** to align with financial, security, and compliance requirements.
+This fits a data-science-friendly workflow:
+- **Prototype in notebooks** for exploration, analysis, and rapid iteration.
+- **Promote validated logic into `.py` files** for reuse, testing, and deployment.
+- **Keep business assumptions visible** while the use case is evolving.
+
+## Repository Workflow
+### Notebook-first development
+Use notebooks for:
+- Problem framing and hypothesis generation.
+- EDA on banking service, customer, or operations datasets.
+- Prompt experiments and retrieval evaluation.
+- Rapid prototyping of scoring, routing, or summarization logic.
+
+Use Python modules under `src/` for:
+- Deployment-ready business logic.
+- Reusable configuration and helper functions.
+- API or application integration points.
+- Testable utilities that should not stay notebook-only.
+
+## Current Project Structure
+```text
+.
+├── notebooks/
+│   └── 01_banking_agent_use_case_discovery.ipynb
+├── src/
+│   └── banking_assistant/
+│       └── use_case_config.py
+├── requirements.txt
+└── README.md
+```
 
 ## Banking Client Problem Statement
 Banks typically manage a wide range of service requests across retail, commercial, and wealth operations. These requests often span multiple systems and require context-specific decisions. Common pain points include:
@@ -91,96 +116,19 @@ The assistant should tailor responses using:
 - Relationship value.
 - Prior service interactions.
 
-## Reference Architecture
-A typical architecture for this use case includes:
+## Starter Assets Added
+### 1. Discovery notebook
+`notebooks/01_banking_agent_use_case_discovery.ipynb` is the main workspace for the first phase of data-science exploration. It imports the reusable Python configuration and gives us a clean place to extend personas, assumptions, scope, and later dataset analysis.
 
-1. **User channels**
-   - Mobile app
-   - Online banking portal
-   - Contact center desktop
-   - RM/employee productivity tools
+### 2. Deployment-ready Python module
+`src/banking_assistant/use_case_config.py` contains the first reusable configuration artifact for the banking assistant. This is the pattern we will follow as notebook logic becomes stable enough for deployment.
 
-2. **Agent orchestration layer**
-   - Planner
-   - Tool router
-   - Memory/context manager
-   - Response generator
-   - Guardrails/policy engine
-
-3. **Enterprise integrations**
-   - Core banking
-   - CRM
-   - Loan systems
-   - Card management
-   - Fraud and compliance systems
-   - Knowledge/document platforms
-
-4. **Governance and observability**
-   - Identity and access controls
-   - Audit logs
-   - Prompt and response monitoring
-   - Model evaluation framework
-   - Risk controls and approval workflows
-
-## Sample End-to-End Workflow
-### Scenario: Customer disputes a suspicious credit card transaction
-1. Customer says: “I see a transaction I don’t recognize. Can you help?”
-2. Agent authenticates the user using approved digital verification steps.
-3. Agent retrieves recent card transactions.
-4. Agent identifies the disputed transaction and asks clarifying questions.
-5. Agent checks dispute rules and eligibility.
-6. Agent initiates a dispute case in the card servicing system.
-7. Agent shares next steps, estimated timelines, and reference number.
-8. If risk signals are high, the workflow escalates to fraud operations.
-
-## Data, Security, and Compliance Considerations
-Because banking is a highly regulated environment, the implementation must include:
-- Strong authentication and role-based access control.
-- Encryption for data at rest and in transit.
-- PII masking where full data is not required.
-- Detailed auditability of prompts, tool calls, and actions.
-- Model governance with approval processes for production updates.
-- Controls for hallucination, unsafe advice, and unauthorized actions.
-- Compliance alignment with applicable regulatory and internal policy requirements.
-
-## Success Metrics
-A banking client can measure the value of this use case using:
-- Reduction in average handling time.
-- First-contact resolution improvement.
-- Increase in self-service completion rates.
-- Reduction in manual back-office effort.
-- Relationship manager productivity improvement.
-- Customer satisfaction and Net Promoter Score improvement.
-- Lower operational risk through standardized workflows.
-
-## Suggested Implementation Phases
-### Phase 1: Discovery and Prioritization
-- Identify the highest-value journeys.
-- Define target personas and channels.
-- Assess data availability and system integrations.
-- Align with compliance, security, and risk stakeholders.
-
-### Phase 2: Pilot
-- Launch a limited-scope assistant for one use case, such as service support or RM copilot.
-- Integrate a small number of trusted tools and knowledge sources.
-- Add feedback capture and human escalation.
-- Measure business and operational outcomes.
-
-### Phase 3: Scale
-- Expand to additional products and workflows.
-- Add more enterprise systems and reusable agent skills.
-- Improve observability, evaluation, and governance automation.
-- Roll out to more users and channels.
-
-## Recommended MVP Scope
-For a practical first release, a banking client could focus on:
-- Account and transaction inquiries.
-- Card dispute intake.
-- Service policy lookup.
-- Relationship manager meeting summaries.
-- Human escalation for exceptions and approvals.
+## Suggested Next Steps
+1. Add a synthetic or sanitized dataset to evaluate service journeys and customer intents.
+2. Expand the notebook with exploratory analysis and prioritization scoring.
+3. Introduce retrieval and prompt evaluation notebooks.
+4. Create tests around any `.py` logic promoted from notebooks.
+5. Add an application entry point once the deployment architecture is finalized.
 
 ## Conclusion
-An Agentic AI banking assistant can help financial institutions improve customer experience, boost employee productivity, and streamline operations while preserving strong controls. The most effective implementations start with a narrow, high-value use case, integrate with trusted systems, and build in governance from day one.
-
-This README can serve as the starting point for workshops, solution design, stakeholder alignment, and MVP planning for a banking client.
+This repo is now set up so we can work the way you prefer: explore in notebooks first, then promote production-worthy logic into Python files for deployment. That gives us a clean bridge between data science experimentation and engineering delivery.

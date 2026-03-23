@@ -25,10 +25,13 @@ Use Python modules under `src/` for:
 ## Current Project Structure
 ```text
 .
+├── dataset/
+│   └── .gitkeep
 ├── notebooks/
 │   └── 01_banking_agent_use_case_discovery.ipynb
 ├── src/
 │   └── banking_assistant/
+│       ├── dataset_loader.py
 │       └── use_case_config.py
 ├── requirements.txt
 └── README.md
@@ -123,8 +126,30 @@ The assistant should tailor responses using:
 ### 2. Deployment-ready Python module
 `src/banking_assistant/use_case_config.py` contains the first reusable configuration artifact for the banking assistant. This is the pattern we will follow as notebook logic becomes stable enough for deployment.
 
+## Local Dataset Support
+Place your JSON, JSONL/NDJSON, or CSV sample files inside the repository-local `dataset/` folder. This keeps the 10,000-record sample data available to notebooks and future application code without relying on external storage.
+
+### Supported patterns
+- `dataset/customer_service_cases.csv`
+- `dataset/customer_profiles.json`
+- `dataset/transaction_events.jsonl`
+
+### Reusable loader
+The new `src/banking_assistant/dataset_loader.py` module provides helpers to:
+- Discover all supported files under `dataset/`.
+- Load a named dataset into a Pandas DataFrame.
+- Summarize row counts, columns, and file types before analysis.
+
+Example usage:
+```python
+from banking_assistant.dataset_loader import summarize_available_datasets, load_dataset
+
+summarize_available_datasets()
+service_cases = load_dataset("customer_service_cases")
+```
+
 ## Suggested Next Steps
-1. Add a synthetic or sanitized dataset to evaluate service journeys and customer intents.
+1. Copy your synthetic or sanitized sample files into `dataset/` to evaluate service journeys and customer intents.
 2. Expand the notebook with exploratory analysis and prioritization scoring.
 3. Introduce retrieval and prompt evaluation notebooks.
 4. Create tests around any `.py` logic promoted from notebooks.

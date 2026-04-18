@@ -9,6 +9,7 @@ from .dataset_loader import (
     summarize_available_datasets,
     summarize_dataset,
 )
+from .eda import run_traditional_eda
 from .use_case_config import BANKING_ASSISTANT_BLUEPRINT, summarize_mvp_scope
 
 __all__ = [
@@ -21,4 +22,5 @@ __all__ = [
     "summarize_available_datasets",
     "summarize_dataset",
     "summarize_mvp_scope",
+    "run_traditional_eda",
 ]
